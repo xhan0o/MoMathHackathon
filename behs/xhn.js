@@ -16,6 +16,9 @@ import * as Sensor from 'sensors';
 
 var problem
 var s
+var step=false;
+var num1;
+var num2;
 pb.setup = function (p) {
   /* this == pb.p5 == p */
   /* P5Behavior already calls createCanvas for us */
@@ -24,29 +27,34 @@ pb.setup = function (p) {
   s = 1;
 }
  
-pb.draw = function (floor,p) {
-this.clear();
-this.textSize(32);
-this.text(s, 150, 30);
-this.fill(256, 256, 256);
 
+pb.draw = function (floor,p) {
+this.textSize(40);
+var j = 0;
+
+while (!step) {
+this.clear();
+while(j<10) {
+	
+var s = Math.random()*99;
+var yy = Math.random()*576;
+var xx = Math.random()*576;
+this.text(s.toFixed(), yy.toFixed(), xx.toFixed());
+this.fill(256, 256, 256);
+j++;
+}
+step = true;
+}
 for(var i = new Sensor.Index(); i; i = i.incr()){
     if (floor.sensors.get(i)){
         console.log('This sensor is enabled');
-		console.log(i);
+		console.log(i.x*8,i.y*8);
+		step = false;
+		
     }
 }
 
-/*
-for (let u of floor.users) {
-	pb.drawUser(u);
-	console.log(u)
-}
 
-  this.fill(128, 128, 128, 128);
-  this.noStroke();
-  pb.drawSensors(floor.sensors);
-*/
 };
 
 export const behavior = {
